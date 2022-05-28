@@ -1,6 +1,8 @@
 ansible-galaxy-import-action
 ============================
 
+[![Tests](https://github.com/gantsign/ansible-galaxy-import-action/actions/workflows/tests.yml/badge.svg)](https://github.com/gantsign/ansible-galaxy-import-action/actions/workflows/tests.yml)
+
 Imports a the current repo into Ansible Galaxy as a role.
 
 Usage
