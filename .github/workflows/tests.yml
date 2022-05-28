@@ -18,7 +18,7 @@ jobs:
       - name: Import role into Ansible Galaxy
         if: >-
           ${{ github.repository_owner == 'gantsign'
-          && !startsWith(github.ref, 'refs/heads/dependabot/') }}
+          && github.actor != 'dependabot[bot]' }}
         uses: ./
         with:
           api-key: ${{ secrets.GALAXY_API_KEY }}
