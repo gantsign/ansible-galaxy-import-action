@@ -1,0 +1,39 @@
+name: Ansible Galaxy Import
+description: Imports the current repo as a role in Ansible Galaxy
+inputs:
+  api-key:
+    description: Your Ansible Galaxy API key
+    required: true
+  github-repository:
+    description: The owner and repository name. For example gantsign/ansible-role-java.
+    required: true
+    default: '${{ github.repository }}'
+runs:
+  using: composite
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.8'
+
+    - name: Install Ansible
+      shell: sh
+      run: pip3 install --no-compile ansible-core
+      env:
+        FORCE_COLOR: '1'
+        PY_COLORS: '1'
+
+    - name: Trigger a new import on Galaxy
+      shell: bash
+      run: |-
+        REPOSITORY='${{ inputs.github-repository }}'
+        OWNER_NAME="${REPOSITORY%%/*}"
+        REPO_NAME="${REPOSITORY#*/}"
+        [ -z '${{ inputs.api-key }}' ] && >&2 echo "ERROR: api-key is required" && exit 1
+        echo "Importing role with owner: $OWNER_NAME, repo: $REPO_NAME"
+        ansible-galaxy role import \
+        --api-key '${{ inputs.api-key }}' "$OWNER_NAME" "$REPO_NAME"
+      env:
+        FORCE_COLOR: '1'
+        PY_COLORS: '1'
+        ANSIBLE_FORCE_COLOR: '1'
