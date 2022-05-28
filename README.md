@@ -21,9 +21,6 @@ jobs:
     name: Release
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
       - name: Import role into Ansible Galaxy
         uses: gantsign/ansible-galaxy-import-action@v1
         with:
