@@ -16,7 +16,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Import role into Ansible Galaxy
-        if: ${{ github.repository_owner == 'gantsign' }}
+        if: >-
+          ${{ github.repository_owner == 'gantsign'
+          && !startsWith(github.ref, 'refs/heads/dependabot/') }}
         uses: ./
         with:
           api-key: ${{ secrets.GALAXY_API_KEY }}
